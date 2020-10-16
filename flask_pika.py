@@ -1,18 +1,8 @@
 import datetime
+from queue import Queue
+
 import pika
-import warnings
 from pika import connection
-
-# python-3 compatibility
-try:
-    from Queue import Queue
-except ImportError as e:
-    from queue import Queue
-
-try:
-    xrange
-except NameError as e:
-    xrange = range
 
 
 __all__ = ['Pika']
@@ -58,7 +48,7 @@ class Pika(object):
         if pool_params is not None:
             self.pool_size = pool_params['pool_size']
             self.pool_recycle = pool_params['pool_recycle']
-            for i in xrange(self.pool_size):
+            for i in range(self.pool_size):
                 channel = PrePopulationChannel()
                 self.__set_recycle_for_channel(channel, -1)
                 self.pool_queue.put(channel)
